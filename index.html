@@ -56,6 +56,7 @@
   <div id="cactus"></div>
   <label id="lb">score : 0</label>
 </div>
+<title>DINO-GAME</title>
 <button id="btn">JUMP</button>
 
 <script>
@@ -95,7 +96,9 @@
 
     if (p.right > c.left && p.left < c.right && p.bottom > c.top && p.top < c.bottom) {
       count = 0;
+      cactusleft = 600;
       label.textContent = 'score : ' + count;
+      cactus.style.left = cactusleft + 'px';
     }
   }
 
