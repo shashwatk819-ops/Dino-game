@@ -1,0 +1,103 @@
+<style>
+  #player {
+    height: 50px;
+    width: 50px;
+    border: 1px solid white;
+    position: absolute;
+    transition: top 0.5s, background-color 0.2s;
+    top: 300px;
+    left: 10px;
+  }
+  #cactus {
+    height: 100px;
+    width: 50px;
+    border: 1px solid white;
+    position: absolute;
+    top: 250px;
+    left: 400px;
+  }
+  #container {
+    height: 350px;
+    width: 600px;
+    border: 1px solid white;
+    overflow: hidden;
+    position: relative;
+  }
+  #lb {
+    font-size: 15px;
+    font-family: monospace;
+    color: white;
+    border: 1px solid white;
+    padding: 5px;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: black;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  #btn {
+    border: 1px solid white;
+    color: white;
+    background-color: black;
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: monospace;
+    transition: 0.2s;
+  }
+</style>
+
+<div id="container">
+  <div id="player"></div>
+  <div id="cactus"></div>
+  <label id="lb">score : 0</label>
+</div>
+<button id="btn">JUMP</button>
+
+<script>
+  var player = document.getElementById('player');
+  var cactus = document.getElementById('cactus');
+  var button = document.getElementById('btn');
+  var label = document.getElementById('lb');
+  var playertop = 300;
+  var cactusleft = 400;
+  var jumping = false;
+  var count = 0;
+
+  button.onclick = function() {
+    if (jumping) return;
+    jumping = true;
+    player.style.top = (playertop - 150) + 'px';
+    
+    setTimeout(function() {
+      player.style.top = playertop + 'px';
+      setTimeout(function() {
+        jumping = false;
+      }, 500);
+    }, 500);
+  };
+
+  function moveCactus() {
+    cactusleft -= 10;
+    if (cactusleft < -50) {
+      cactusleft = 600;
+      count++;
+      label.textContent = 'score : ' + count;
+    }
+    cactus.style.left = cactusleft + "px";
+
+    var p = player.getBoundingClientRect();
+    var c = cactus.getBoundingClientRect();
+
+    if (p.right > c.left && p.left < c.right && p.bottom > c.top && p.top < c.bottom) {
+      count = 0;
+      label.textContent = 'score : ' + count;
+    }
+  }
+
+  setInterval(moveCactus, 25);
+</script>
